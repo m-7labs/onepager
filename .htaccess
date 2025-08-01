@@ -1,0 +1,346 @@
+# ========================================
+# PREMIUM DOMAIN ONEPAGER - .HTACCESS
+# Comprehensive Apache Configuration
+# ========================================
+# This .htaccess file provides enterprise-grade configuration for:
+# - SEO optimization and clean URLs
+# - Security hardening with modern headers
+# - Performance optimization through caching and compression
+# - Professional URL structure and redirects
+# ========================================
+
+# ========================================
+# 1. REWRITE ENGINE & BASIC CONFIGURATION
+# ========================================
+
+# Enable URL rewriting engine
+RewriteEngine On
+
+# Set default directory index to index.html
+DirectoryIndex index.html
+
+# Set server signature off for security
+ServerSignature Off
+
+# ========================================
+# 2. HTTPS FORCE REDIRECT (SSL SECURITY)
+# ========================================
+# Force all traffic to HTTPS for SEO and security benefits
+# Google prioritizes HTTPS sites in search rankings
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ========================================
+# 3. WWW CANONICALIZATION
+# ========================================
+# Choose ONE canonical version: www vs non-www
+# This prevents duplicate content issues for SEO
+# OPTION 1: Force NON-WWW (recommended for single page sites)
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# OPTION 2: Force WWW (uncomment if you prefer www version)
+# <IfModule mod_rewrite.c>
+#     RewriteCond %{HTTP_HOST} !^www\. [NC]
+#     RewriteCond %{HTTP_HOST} !^localhost [NC]
+#     RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# </IfModule>
+
+# ========================================
+# 4. CLEAN URL STRUCTURE & REWRITES
+# ========================================
+# Remove file extensions for cleaner URLs and better SEO
+
+<IfModule mod_rewrite.c>
+    # Remove .html extension from URLs
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^\.]+)$ $1.html [NC,L]
+    
+    # Redirect .html extension to clean URL
+    RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+    RewriteRule ^ /%1? [NC,L,R=301]
+    
+    # Remove trailing slashes (except for root)
+    RewriteCond %{REQUEST_URI} ^(.+)/$
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+    
+    # Ensure index.html is served at root
+    RewriteRule ^$ index.html [L]
+</IfModule>
+
+# ========================================
+# 5. SECURITY HEADERS FOR SEO & PROTECTION
+# ========================================
+# Modern security headers that also benefit SEO rankings
+
+<IfModule mod_headers.c>
+    # HTTP Strict Transport Security (HSTS)
+    # Tells browsers to only connect via HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Prevent clickjacking attacks
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy for better privacy and SEO
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy (basic - adjust as needed)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self'"
+    
+    # Permissions Policy (formerly Feature Policy)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=()"
+</IfModule>
+
+# ========================================
+# 6. GZIP COMPRESSION FOR PERFORMANCE
+# ========================================
+# Compress files for faster loading times
+# Page speed is a confirmed Google ranking factor
+
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    
+    # Remove browser bugs (only needed for really old browsers)
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# ========================================
+# 7. BROWSER CACHING OPTIMIZATION
+# ========================================
+# Set proper cache headers for better performance
+# Improves page speed scores which benefit SEO
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+    
+    # Default cache for all files
+    ExpiresDefault "access plus 1 month"
+    
+    # HTML files (short cache for content updates)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS and JavaScript files
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    
+    # Images
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+    
+    # Fonts
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    
+    # Documents
+    ExpiresByType application/pdf "access plus 1 month"
+    
+    # Manifest files
+    ExpiresByType application/manifest+json "access plus 1 week"
+    ExpiresByType text/cache-manifest "access plus 0 seconds"
+</IfModule>
+
+# ========================================
+# 8. CACHE CONTROL HEADERS
+# ========================================
+# Additional cache control for better performance
+
+<IfModule mod_headers.c>
+    # Cache static assets
+    <filesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "max-age=31536000, public, immutable"
+    </filesMatch>
+    
+    # Cache HTML with shorter duration
+    <filesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=3600, public, must-revalidate"
+    </filesMatch>
+    
+    # Remove ETags (use Cache-Control instead)
+    Header unset ETag
+    FileETag None
+</IfModule>
+
+# ========================================
+# 9. FILE ACCESS RESTRICTIONS
+# ========================================
+# Prevent access to sensitive files and directories
+
+# Prevent access to .htaccess file itself
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent access to backup and temporary files
+<FilesMatch "\.(bak|backup|old|tmp|temp|log|sh|bat|cmd|conf|ini|sql|swp|swo|orig|~)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to version control directories
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.svn
+RedirectMatch 404 /\.hg
+
+# Prevent access to common sensitive files
+<FilesMatch "^(composer\.json|composer\.lock|package\.json|package-lock\.json|yarn\.lock|phpunit\.xml|\.env|\.env\.*)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ========================================
+# 10. COMMON 301 REDIRECTS
+# ========================================
+# Handle common URL variations and prevent 404s
+
+<IfModule mod_rewrite.c>
+    # Redirect common variations to canonical URLs
+    
+    # Remove multiple slashes
+    RewriteCond %{THE_REQUEST} \s/+(.+?)//+(.*?)[\s?] [NC]
+    RewriteRule ^ /%1/%2? [R=301,L]
+    
+    # Redirect index variations to root
+    RewriteRule ^index\.html?/?$ / [R=301,L]
+    RewriteRule ^home\.html?/?$ / [R=301,L]
+    RewriteRule ^default\.html?/?$ / [R=301,L]
+    
+    # Common file extension redirects (if you had these)
+    # RewriteRule ^about\.php$ /about [R=301,L]
+    # RewriteRule ^contact\.php$ /contact [R=301,L]
+</IfModule>
+
+# ========================================
+# 11. MIME TYPE DECLARATIONS
+# ========================================
+# Ensure proper MIME types for better SEO and performance
+
+<IfModule mod_mime.c>
+    # Web fonts
+    AddType application/font-woff woff
+    AddType application/font-woff2 woff2
+    AddType application/vnd.ms-fontobject eot
+    AddType font/ttf ttf
+    AddType font/otf otf
+    
+    # SVG
+    AddType image/svg+xml svg
+    
+    # Manifest
+    AddType application/manifest+json webmanifest
+    
+    # JavaScript
+    AddType application/javascript js
+    
+    # CSS
+    AddType text/css css
+</IfModule>
+
+# ========================================
+# 12. ERROR PAGE HANDLING
+# ========================================
+# Custom error pages for better UX and SEO
+
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
+# ErrorDocument 403 /403.html
+
+# For single page applications, redirect all 404s to index
+# Uncomment if needed for SPA routing
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule . /index.html [L]
+
+# ========================================
+# 13. ADDITIONAL SEO OPTIMIZATIONS
+# ========================================
+
+<IfModule mod_headers.c>
+    # Add canonical header for homepage
+    Header set Link "</>;rel=canonical"
+    
+    # Prevent search engines from indexing staging/development versions
+    # Uncomment and modify if on staging server
+    # Header set X-Robots-Tag "noindex, nofollow"
+    
+    # DNS prefetch control
+    Header set X-DNS-Prefetch-Control "on"
+</IfModule>
+
+# ========================================
+# 14. PERFORMANCE OPTIMIZATIONS
+# ========================================
+
+<IfModule mod_headers.c>
+    # Enable keep-alive connections
+    Header set Connection keep-alive
+    
+    # Preload critical resources (adjust paths as needed)
+    # Header add Link "</css/styles.css>;rel=preload;as=style"
+    # Header add Link "</js/main.js>;rel=preload;as=script"
+</IfModule>
+
+# Enable follow symlinks
+Options +FollowSymlinks
+
+# Disable server signature
+ServerSignature Off
+
+# ========================================
+# END OF CONFIGURATION
+# ========================================
+# This .htaccess file provides comprehensive optimization for:
+# ✓ SEO: Clean URLs, canonical structure, HTTPS enforcement
+# ✓ Performance: Compression, caching, resource optimization
+# ✓ Security: Modern headers, file protection, access control
+# ✓ UX: Proper redirects, error handling, fast loading
+# ========================================

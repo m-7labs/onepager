@@ -1,0 +1,296 @@
+# Robots.txt for PremiumDomain.com - Premium Domain Sales OnePager
+# Created for maximum SEO visibility and AI/LLM indexing
+# Last Updated: 2024-01-01
+
+# =============================================================================
+# UNIVERSAL ACCESS - ALLOW ALL CRAWLING BY DEFAULT
+# =============================================================================
+# This directive allows all compliant web crawlers to access the entire site
+User-agent: *
+Allow: /
+
+# =============================================================================
+# MAJOR SEARCH ENGINE CRAWLERS - EXPLICIT ALLOWANCES
+# =============================================================================
+
+# Google Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+# Microsoft Bing Crawlers
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: msnbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+# Yahoo Search Crawlers
+User-agent: Slurp
+Allow: /
+
+User-agent: Yahoo-MMCrawler
+Allow: /
+
+# Yandex (Russian Search Engine)
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: YandexVideo
+Allow: /
+
+User-agent: YandexNews
+Allow: /
+
+# Baidu (Chinese Search Engine)
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Baiduspider-video
+Allow: /
+
+User-agent: Baiduspider-news
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# =============================================================================
+# AI & LLM CRAWLERS - MODERN AI TRAINING AND INDEXING BOTS
+# =============================================================================
+
+# OpenAI GPT Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Google AI Extended (Bard, Gemini, etc.)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# Anthropic Claude Web Crawler
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Meta AI Crawlers (Facebook, Instagram AI)
+User-agent: FacebookBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Microsoft AI Crawlers (Copilot, Bing AI)
+User-agent: BingAI
+Allow: /
+
+User-agent: CopilotBot
+Allow: /
+
+# Other AI/ML Research Crawlers
+User-agent: AI2Bot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: ChatBot
+Allow: /
+
+# Academic and Research Crawlers
+User-agent: ia_archiver
+Allow: /
+
+User-agent: Wayback
+Allow: /
+
+User-agent: archive.org_bot
+Allow: /
+
+# =============================================================================
+# SOCIAL MEDIA CRAWLERS - FOR SOCIAL SHARING OPTIMIZATION
+# =============================================================================
+
+# Twitter/X Link Preview
+User-agent: Twitterbot
+Allow: /
+
+User-agent: X-Bot
+Allow: /
+
+# LinkedIn Link Preview
+User-agent: LinkedInBot
+Allow: /
+
+# WhatsApp Link Preview
+User-agent: WhatsApp
+Allow: /
+
+# Telegram Link Preview
+User-agent: TelegramBot
+Allow: /
+
+# Discord Link Preview
+User-agent: Discordbot
+Allow: /
+
+# =============================================================================
+# EMERGING AI SERVICES - FUTURE-PROOFING
+# =============================================================================
+
+# Emerging AI Crawlers (Future-proofing)
+User-agent: *AI*
+Allow: /
+
+User-agent: *Bot*
+Allow: /
+
+User-agent: *Crawler*
+Allow: /
+
+User-agent: *Spider*
+Allow: /
+
+# Character.AI and Similar Services
+User-agent: CharacterAI
+Allow: /
+
+# Cohere AI
+User-agent: CohereBot
+Allow: /
+
+# Hugging Face
+User-agent: HuggingFaceBot
+Allow: /
+
+# =============================================================================
+# SEO AND ANALYTICS CRAWLERS
+# =============================================================================
+
+# SEO Tools and Analytics
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+
+User-agent: SiteAuditBot
+Allow: /
+
+# =============================================================================
+# DOMAIN-SPECIFIC CRAWLERS
+# =============================================================================
+
+# Domain analysis and appraisal tools
+User-agent: DomainStatsBot
+Allow: /
+
+User-agent: DomainAppraiser
+Allow: /
+
+User-agent: EstibotCrawler
+Allow: /
+
+User-agent: GoDaddyBot
+Allow: /
+
+User-agent: NameBio
+Allow: /
+
+# =============================================================================
+# SITEMAP DECLARATIONS
+# =============================================================================
+
+# Primary sitemap location
+Sitemap: https://premiumdomain.com/sitemap.xml
+
+# =============================================================================
+# CRAWL RATE OPTIMIZATION
+# =============================================================================
+
+# Default crawl delay for respectful crawling (1 second)
+# This prevents server overload while maintaining good indexing speed
+# Crawl-delay: 1
+
+# Note: Crawl-delay is commented out for maximum crawling speed
+# Uncomment if server resources become constrained
+
+# =============================================================================
+# SECURITY AND COMPLIANCE NOTES
+# =============================================================================
+
+# This robots.txt file is designed for maximum visibility and indexing
+# All legitimate crawlers are explicitly allowed
+# No restrictions are placed on any content
+# The site is optimized for premium domain sales and marketing
+
+# =============================================================================
+# CONTACT INFORMATION
+# =============================================================================
+
+# For questions about crawling permissions or technical issues:
+# Contact: sales@premiumdomain.com
+# Phone: +1 (555) DOMAIN-1
+
+# =============================================================================
+# FILE MAINTENANCE
+# =============================================================================
+
+# This file should be reviewed quarterly to add new AI crawlers
+# Last review: 2024-01-01
+# Next review: 2024-04-01
+
+# =============================================================================
+# END OF ROBOTS.TXT
+# =============================================================================
